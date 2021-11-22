@@ -9,8 +9,8 @@ before_script:
   - ls
   - mkdir group_vars
   - pwd
-  - mv $PACKER_TOKENS /builds/Pickle/packer-ci/authelia.auto.pkrvars.hcl
-  - mv $VARS_FILE /builds/Pickle/packer-ci/group_vars/all.yml
+  - mv $PACKER_TOKENS /builds/Pickle/packer_authelia/authelia.auto.pkrvars.hcl
+  - mv $VARS_FILE /builds/Pickle/packer_authelia/group_vars/all.yml
  
 stages:
   - validate
