@@ -11,20 +11,20 @@
     update_cache: yes
     cache_valid_time: 86400
 
-- name: Setup or create admin group
-  group:
-    name: admin
-    state: present
-    gid: 666
+#- name: Setup or create admin group
+#  group:
+#    name: admin
+#    state: present
+#    gid: 666
 
-- name: Setup or create user
-  user:
-    name: admin
-    group: admin
-    state: present
-    uid: 666
-    createhome: yes
-    shell: /bin/bash
+#- name: Setup or create user
+#  user:
+#    name: admin
+#    group: admin
+#    state: present
+#    uid: 666
+#    createhome: yes
+#    shell: /bin/bash
     
 - name: Install Git
   become: true
@@ -35,7 +35,7 @@
 
 - name: Set authorized key taken from file
   authorized_key:
-    user: admin
+    user: ubuntu
     state: present
     key: '{{ item }}'
   with_file:

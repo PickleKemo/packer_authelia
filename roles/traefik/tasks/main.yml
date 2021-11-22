@@ -2,26 +2,26 @@
 # tasks file for updating the OS, creating user, and hostname ..
 - name: Create traefik directory
   file:
-    path: /opt/traefik
+    path: /etc/traefik
     state: directory
     mode: 0644
 
 - name: Copy configuration file to server directly.
   copy:
     src: traefik.yml
-    dest: /opt/traefik/traefik.yml
+    dest: /etc/traefik/traefik.yml
     mode: 0640
 
 - name: Create traefik directory
   file:
-    path: /home/traefik
+    path: /home/ubuntu/traefik
     state: directory
     mode: 0644
 
 - name: Set configuration file and copy to server directly.
   template:
     src: docker-compose.yml.j2
-    dest: /home/traefik/docker-compose.yml
+    dest: /home/ubuntu/traefik/docker-compose.yml
     mode: 0644
 
 #- name: Deploy services
