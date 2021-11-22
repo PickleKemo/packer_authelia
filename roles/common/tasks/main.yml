@@ -1,0 +1,45 @@
+---
+# tasks file for updating the OS, creating user, and hostname ..
+- name: Set timezone to Paris
+  timezone:
+    name: Europe/Paris
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Setup or create admin group
+  group:
+    name: admin
+    state: present
+    gid: 666
+
+- name: Setup or create user
+  user:
+    name: admin
+    group: admin
+    state: present
+    uid: 666
+    createhome: yes
+    shell: /bin/bash
+- name: Install Git
+  become: true
+  apt:
+    name: git
+    state: present
+    update_cache: yes
+
+- name: Set authorized key taken from file
+  authorized_key:
+  #ansible.authorized_key:
+    user: admin
+    state: present
+    #key: "{{ lookup('file', '/home/admin/.ssh/id_rsa.pub') }}"
+    key: '{{ item }}'
+  with_file:
+    - public_keys/haitam
+    - public_keys/younes
+    - public_keys/jeff

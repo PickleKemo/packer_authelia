@@ -1,0 +1,30 @@
+---
+# tasks file for updating the OS, creating user, and hostname ..
+- name: Create traefik directory
+  file:
+    path: /opt/traefik
+    state: directory
+    mode: 0644
+
+- name: Copy configuration file to server directly.
+  copy:
+    src: traefik.yml
+    dest: /opt/traefik/traefik.yml
+    mode: 0640
+
+- name: Create my-traefik directory
+  file:
+    path: /home/my-traefik
+    state: directory
+    mode: 0644
+
+- name: Set configuration file and copy to server directly.
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/my-traefik/docker-compose.yml
+    mode: 0644
+
+#- name: Deploy services
+ # command: docker-compose up -d
+  #args:
+   # chdir: /home/my-traefik

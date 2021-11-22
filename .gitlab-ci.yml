@@ -1,0 +1,34 @@
+image:
+  name: hashicorp/packer:latest
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+before_script:
+  - packer init .
+  - ls
+  - mkdir group_vars
+  - pwd
+  - mv $PACKER_TOKENS /builds/Pickle/packer-ci/tp1.auto.pkrvars.hcl
+  - mv $VARS_FILE /builds/Pickle/packer-ci/group_vars/all.yml
+ 
+stages:
+  - validate
+  - deploy
+
+validate:
+  stage: validate
+  script:
+   - packer validate .
+
+build:
+  stage: deploy
+  environment: production
+  script:
+    - packer build .
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/manifest.json 
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always

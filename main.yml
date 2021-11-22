@@ -1,0 +1,11 @@
+---
+
+# SERVER Test
+- hosts: all
+  become: true
+
+  roles:
+    - common
+    - ansible-docker
+    - dck-wordpress 
+    - traefik
