@@ -2,6 +2,6 @@ users:
   user_uno:
     displayname: "{{ user_authelia }}"
     password: "$argon2id$v=19$m=65536,t=1,p=8$U3A0RVdBckRaMis4Z3VFTA$K+mY7oDeInNFdpprWvSRfpqBSfOfz+joFwUblvjxrjA"
-    email: {{ email-authelia }}
+    email: "{{ email-authelia }}"
     groups:
       - admins
