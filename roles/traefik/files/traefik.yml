@@ -44,14 +44,14 @@ certificatesResolvers:
 #
   staging:
     acme:
-      email: haytam-aomran@hotmail.com  # TODO: Change this to your email
+      email: toto@hotmail.com  # TODO: Change this to your email
       storage: /ssl-certs/acme.json
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       httpChallenge:
         entryPoint: web
   production:
     acme:
-      email: haytam-aomran@hotmail.com  # TODO: Change this to your email
+      email: toto@hotmail.com  # TODO: Change this to your email
       storage: /ssl-certs/acme.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:

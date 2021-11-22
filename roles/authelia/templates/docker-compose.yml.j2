@@ -1,0 +1,54 @@
+---
+version: "3.9"
+
+services:
+  authelia:
+    image: authelia/authelia
+    volumes:
+      - ./config:/config
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authelia.entrypoints=websecure
+      - traefik.http.routers.authelia.rule=Host(`{{ authelia_url }}`)
+      - traefik.http.routers.authelia.tls=true
+      - traefik.http.routers.authelia.tls.certresolver=letsencrypt
+      - traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://{{ authelia_url }}  # yamllint disable-line rule:line-length
+      - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
+    healthcheck:
+      disable: true
+    environment:
+      - TZ=Europe/Paris
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - ./redis:/data
+    networks:
+      - traefik_proxy
+    expose:
+      - 6379
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+
+  secure:
+    image: traefik/whoami
+    networks:
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.secure.rule=Host(`{{ flask_url }}`)
+      - traefik.http.routers.secure.entrypoints=websecure
+      - traefik.http.routers.secure.tls=true
+      - traefik.http.routers.secure.tls.certresolver=letsencrypt
+      - traefik.http.routers.secure.middlewares=authelia@docker
+    restart: unless-stopped
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+

@@ -1,2 +1,31 @@
 ---
 # tasks file for authelia
+- name: Create authelia directory
+  file:
+    path: /home/authelia
+    state: directory
+    mode: 0644
+
+- name: Create config directory
+  file:
+    path: /home/authelia/config
+    state: directory
+    mode: 0644
+
+- name: Set docker-compose file and copy to server directly.
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/authelia/docker-compose.yml
+    mode: 0644
+
+- name: Set configuration file and copy to server directly.
+  template:
+    src: config/configuration.yml.j2
+    dest: /home/authelia/config/configuration.yml
+    mode: 0644
+
+- name: Set users file and copy to server directly.
+  template:
+    src: config/users_database.yml.j2
+    dest: /home/authelia/config/users_database.yml
+    mode: 0644

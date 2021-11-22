@@ -1,2 +1,13 @@
 ---
 # tasks file for flask
+- name: Create flask directory
+  file:
+    path: /home/flask
+    state: directory
+    mode: 0644
+
+- name: Set configuration file and copy to server directly.
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/flask/docker-compose.yml
+    mode: 0644

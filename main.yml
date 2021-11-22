@@ -6,6 +6,7 @@
 
   roles:
     - common
-    - ansible-docker
-    - dck-wordpress 
+    - docker
     - traefik
+    - authelia
+    - flask

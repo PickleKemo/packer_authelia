@@ -26,24 +26,6 @@ locals {
 source "amazon-ebs" "ubuntu" {
   access_key    = "${var.access}"
   secret_key    = "${var.secret}"
-  ami_name      = "${var.ami_prefix}-${local.timestamp}"
-  instance_type = "t3.micro"
-  region        = "eu-north-1"
-  source_ami_filter {
-    filters = {
-      name                = "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*"
-      root-device-type    = "ebs"
-      virtualization-type = "hvm"
-    }
-    most_recent = true
-    owners      = ["099720109477"]
-  }
-  ssh_username = "ubuntu"
-}
-
-source "amazon-ebs" "ubuntu-focal" {
-  access_key    = "${var.access}"
-  secret_key    = "${var.secret}"
   ami_name      = "${var.ami_prefix}-focal-${local.timestamp}"
   instance_type = "t3.micro"
   region        = "eu-north-1"
@@ -63,27 +45,26 @@ build {
   name    = "packer-build"
   sources = [
     "source.amazon-ebs.ubuntu",
-    "source.amazon-ebs.ubuntu-focal"
   ]
   provisioner "shell" {
     inline = [
-      "sudo apt-get update",
-      "sudo apt-get upgrade -y",
-      "sudo apt-get install software-properties-common",
+      "sudo apt update",
+      "sudo apt upgrade -y",
+      "sudo apt install software-properties-common",
       "sudo add-apt-repository -y ppa:ansible/ansible",
-      "sudo apt-get update",
-      "sudo apt-get upgrade -y",
-      "sudo apt-get install ansible -y",
-      #"sudo ansible-galaxy collection install ansible.posix"
+      "sudo apt update",
+      "sudo apt upgrade -y",
+      "sudo apt install ansible -y",
     ]
   }
   provisioner "ansible-local" {
     group_vars = "./group_vars"
     role_paths = [
       "roles/common",
-      "roles/dck-wordpress",
-      "roles/ansible-docker",
+      "roles/docker",
       "roles/traefik",
+      "roles/authelia",
+      "roles/flask",
     ]
     playbook_file = "./main.yml"    
   } 

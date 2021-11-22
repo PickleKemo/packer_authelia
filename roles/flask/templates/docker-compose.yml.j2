@@ -1,0 +1,21 @@
+---
+
+version: '3.9'
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+
+services:
+  flask:
+    image: digitalocean/flask-helloworld
+    networks:
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.flask.rule=Host(`{{ flask_url }}`)
+      - traefik.http.routers.flask.entrypoints=websecure
+      - traefik.http.routers.flask.tls=true
+      - traefik.http.routers.flask.tls.certresolver=letsencrypt
+      - traefik.http.routers.flask.middlewares=authelia@docker
+    restart: always

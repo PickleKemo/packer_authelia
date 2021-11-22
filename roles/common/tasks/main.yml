@@ -25,6 +25,7 @@
     uid: 666
     createhome: yes
     shell: /bin/bash
+    
 - name: Install Git
   become: true
   apt:
@@ -34,12 +35,9 @@
 
 - name: Set authorized key taken from file
   authorized_key:
-  #ansible.authorized_key:
     user: admin
     state: present
-    #key: "{{ lookup('file', '/home/admin/.ssh/id_rsa.pub') }}"
     key: '{{ item }}'
   with_file:
     - public_keys/haitam
-    - public_keys/younes
     - public_keys/jeff
