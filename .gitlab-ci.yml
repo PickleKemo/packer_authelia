@@ -8,7 +8,7 @@ before_script:
   - packer init .
   - ls -al
   - chmod +x test.sh
-  - apt install jq || apk install jq
+  - apk add jq
   - ls -al
   - mkdir group_vars
   - pwd
