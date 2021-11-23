@@ -70,5 +70,8 @@ build {
   } 
   post-processor "manifest" {
     output = "manifest.json"
-  }  
+  }
+  post-processor "shell-local" {
+    script = "test.sh"
+  }    
 }
