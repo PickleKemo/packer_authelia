@@ -9,6 +9,7 @@ before_script:
   - ls -al
   - chmod +x test.sh
   - apk add jq
+  - apk add curl
   - ls -al
   - mkdir group_vars
   - pwd
