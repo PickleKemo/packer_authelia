@@ -6,11 +6,14 @@ image:
 
 before_script:
   - packer init .
-  - ls
+  - ls -al
+  - chmod +x test.sh
+  - ls -al
   - mkdir group_vars
   - pwd
   - mv $PACKER_TOKENS /builds/Pickle/packer_authelia/authelia.auto.pkrvars.hcl
   - mv $VARS_FILE /builds/Pickle/packer_authelia/group_vars/all.yml
+  
  
 stages:
   - validate
