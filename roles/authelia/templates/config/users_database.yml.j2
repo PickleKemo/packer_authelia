@@ -1,7 +1,7 @@
 users:
-  "{{ user_authelia }}":
-    displayname: "{{ Duser_authelia }}"
-    password: "{{ password_authelia }}"
+  {{ user_authelia }}:
+    displayname: "{{ dis_user_authelia }}"
+    password: "$argon2id$v=19$m=65536,t=1,p=8$U3A0RVdBckRaMis4Z3VFTA$K+mY7oDeInNFdpprWvSRfpqBSfOfz+joFwUblvjxrjA"
     email: toto@hotmail.com
     groups:
       - admins
