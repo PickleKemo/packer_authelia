@@ -30,6 +30,8 @@ build:
   environment: production
   script:
     - packer build .
+    - |
+      curl --request PUT --header "PRIVATE-TOKEN: $access_token" "https://logan.cefim-formation.org/api/v4/projects/45/variables/AMI" --form "value=$AMI_ID"
   artifacts:
     paths:
       - $CI_PROJECT_DIR/manifest.json 
